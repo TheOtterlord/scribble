@@ -1,4 +1,5 @@
 import Compiler from '..'
+import { WORDBREAK } from './constants'
 
 export default class Tokenizer {
   compiler: Compiler
@@ -12,6 +13,24 @@ export default class Tokenizer {
   }
 
   tokenize() {}
+
+  tryMatch(keywords: string[]): string | undefined {
+    let word = this.nextExcept(WORDBREAK)
+    while (this.code.length > this.index+1) {
+      for (let i=0; i<keywords.length; i++) {
+        if (!keywords[i].startsWith(word)) keywords.splice(i, 1)
+      }
+      if (keywords.length === 0) return
+
+      const char = this.next()
+      if (WORDBREAK.includes(char)) {
+        if (keywords.includes(word)) return word
+        this.index -= word.length
+        return
+      }
+      word += char
+    }
+  }
 
   next() {
     this.index++
