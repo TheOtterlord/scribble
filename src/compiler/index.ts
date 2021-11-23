@@ -1,3 +1,4 @@
+import Tokenizer from './tokenizer'
 import type { CompilerOptions } from './types'
 
 export default class Compiler {
@@ -8,6 +9,7 @@ export default class Compiler {
   }
 
   compile(code: string) {
-    // TODO
+    const tokenizer = new Tokenizer(this, code);
+    const tokens = tokenizer.tokenize();
   }
 }
