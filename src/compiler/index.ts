@@ -9,7 +9,8 @@ export default class Compiler {
   }
 
   compile(code: string) {
-    const tokenizer = new Tokenizer(this, code);
-    const tokens = tokenizer.tokenize();
+    const tokenizer = new Tokenizer(this, code)
+    const tokens = tokenizer.tokenize()
+    console.log(tokens)
   }
 }
