@@ -2,6 +2,7 @@ import { Token } from '.'
 import Tokenizer from '.'
 import { SyntaxOptions } from '../types'
 import { parseVariable } from './utils'
+import { SyntaxError } from '../error'
 
 export interface Assignment extends Token {
   type: 'assignment'
@@ -36,8 +37,7 @@ export function parseAssignment(t: Tokenizer, option: keyof SyntaxOptions, match
         value = t.parseAction()
       }
     } else {
-      // TODO: handle error
-      if (!t.tryMatch([component])) throw Error(`Cannot find "${component}" at word ${i} in statement`)
+      if (!t.tryMatch([component])) t.compiler.error(new SyntaxError(t.file, t.code, `Expected ${component} at position in assignment`, {x, y: t.y}))
     }
   }
 

@@ -12,14 +12,16 @@ export interface Token {
 export default class Tokenizer {
   compiler: Compiler
   code: string
+  file: string
   startKeywords: string[] = []
   keywordToOption: { [key: string]: keyof SyntaxOptions | (keyof SyntaxOptions)[] } = {}
 
   index = -1
 
-  constructor(compiler: Compiler, code: string) {
+  constructor(compiler: Compiler, code: string, file: string) {
     this.compiler = compiler
     this.code = code
+    this.file = file
   }
 
   tokenize() {
