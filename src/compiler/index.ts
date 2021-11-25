@@ -19,4 +19,12 @@ export default class Compiler {
     console.error(error.toString())
     if (fatal) process.exit(1)
   }
+
+  warn(error: ScribbleError) {
+    console.warn(error.toString())
+  }
+
+  trace(message: string) {
+    if (this.options.trace) console.log(message)
+  }
 }

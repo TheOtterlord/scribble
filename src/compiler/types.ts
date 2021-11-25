@@ -12,4 +12,5 @@ export interface SyntaxOptions {
 
 export interface CompilerOptions {
   syntax: SyntaxOptions
+  trace: boolean
 }
