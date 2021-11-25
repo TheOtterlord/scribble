@@ -1,4 +1,4 @@
 import Compiler from './compiler'
 
-const compiler = new Compiler({})
-compiler.compile('')
+const compiler = new Compiler(require('./compiler/defaults.json'))
+compiler.compile('', '')
