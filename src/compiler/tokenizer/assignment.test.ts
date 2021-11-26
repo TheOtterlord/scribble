@@ -1,13 +1,17 @@
 import Tokenizer from '.'
 import Compiler from '..'
 
-test('Assign number to variable', () => {
-  let config = require('../defaults.json')
-  config.trace = false
+let config = require('../defaults.json')
+config.trace = false
 
+function tokenize(code: string) {
   const compiler = new Compiler(config)
-  const tokenizer = new Tokenizer(compiler, 'set x to 1', 'REPL')
-  const tokens = tokenizer.tokenize()
+  const tokenizer = new Tokenizer(compiler, code, 'REPL')
+  return tokenizer.tokenize()
+}
+
+test('Assign number to variable', () => {
+  const tokens = tokenize('set x to 1')
 
   expect(tokens).toEqual([
     {
