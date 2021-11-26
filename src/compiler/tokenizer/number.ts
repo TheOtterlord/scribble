@@ -7,7 +7,6 @@ export interface NumberToken extends Token {
   value: string
 }
 
-// TODO: location reason for only returning first number character
 export function parseNumber(t: Tokenizer) {
   let word = t.nextExcept(WORDBREAK)
 

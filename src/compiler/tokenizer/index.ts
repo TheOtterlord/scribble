@@ -75,16 +75,6 @@ export default class Tokenizer {
       // detect numbers
       // detect strings
 
-      // TODO: remove
-      // probably incorrect -> problem is likely with tryMatch ending with an incorrect index
-      // need to look at the stack trace to find the root cause
-      // console error
-      // C:\Users\reube\source\repos\scribble\index.ts:1:10:
-      // 1 | set x to 1c
-      //              ^
-      // Error: Unknown Error
-      // this.compiler.error(new ScribbleError(this.file, this.code, 'Unknown Error', {x: this.x, y: 0}))
-
       const char = this.nextExcept(WORDBREAK)
       this.index--
 
