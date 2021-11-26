@@ -38,6 +38,8 @@ export default class Tokenizer {
       }
     }
 
+    this.compiler.trace(`Start keywords: ${this.startKeywords.join(', ')}`)
+
     const tokens: Token[] = []
     while (this.code.length > this.index) {
       const token = this.parseAction()
@@ -55,14 +57,13 @@ export default class Tokenizer {
       this.compiler.trace(`Detected ${option}`)
       if (typeof option !== 'string') return console.log('TODO: Add support for full pattern match')
       switch (option) {
-        case 'assignment'
-          || 'additionAssignment'
-          || 'subtractionAssignment'
-          || 'multiplicationAssignment'
-          || 'divisionAssignment' ||
-          'moduloAssignment' ||
-          'exponentialAssignment':
-
+        case 'assignment':
+        case 'additionAssignment':
+        case 'subtractionAssignment':
+        case 'multiplicationAssignment':
+        case 'divisionAssignment':
+        case 'moduloAssignment':
+        case 'exponentialAssignment':
           return parseAssignment(this, option, match)
 
         default:

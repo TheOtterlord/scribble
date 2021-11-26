@@ -20,7 +20,7 @@ export default class ScribbleError {
   }
 
   toString() {
-    return `${this.filename}:${this.location.y+1}:${this.location.x+1}:\n${this.format(this.code)}\n${this.type}: ${this.message}`
+    return `${this.filename}:${this.location.y+1}:${this.location.x+1}:\n${this.format(this.code)}\n${this.type} ${this.message}`
   }
 
   format(code: string) {
