@@ -1,8 +1,8 @@
 {
   "syntax": {
     "assignment": ["set", ":name", "to", ":value"],
-    "additionAssignment": ["add", ":name", "to", ":value"],
-    "subtractionAssignment": ["subtract", ":name", "from", ":value"],
+    "additionAssignment": ["add", ":value", "to", ":name"],
+    "subtractionAssignment": ["subtract", ":value", "from", ":name"],
     "multiplicationAssignment": ["multiply", ":name", "by", ":value"],
     "divisionAssignment": ["divide", ":name", "by", ":value"],
     "moduloAssignment": ["modulo", ":name", "by", ":value"],
