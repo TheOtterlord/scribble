@@ -1,7 +1,9 @@
 import Compiler from '..'
-import { WORDBREAK } from './constants'
+import { NUMBER_CHARS, WORDBREAK } from './constants'
 import type { SyntaxOptions, SyntaxOption } from '../types'
 import { parseAssignment } from './assignment'
+import { parseNumber } from './number'
+import ScribbleError from '../error'
 
 export interface Token {
   x: number
@@ -50,6 +52,7 @@ export default class Tokenizer {
     const match = this.tryMatch(this.startKeywords)
     if (match) {
       let option = this.keywordToOption[match]
+      this.compiler.trace(`Detected ${option}`)
       if (typeof option !== 'string') return console.log('TODO: Add support for full pattern match')
       switch (option) {
         case 'assignment'
@@ -67,28 +70,57 @@ export default class Tokenizer {
           break
       }
     } else {
-      // TODO: Implement default handling (e.g. detect expressions that don't start with keywords)
+      // detect remaining patterns
+      // detect variable names
+      // detect numbers
+      // detect strings
+
+      // TODO: remove
+      // probably incorrect -> problem is likely with tryMatch ending with an incorrect index
+      // need to look at the stack trace to find the root cause
+      // console error
+      // C:\Users\reube\source\repos\scribble\index.ts:1:10:
+      // 1 | set x to 1c
+      //              ^
+      // Error: Unknown Error
+      // this.compiler.error(new ScribbleError(this.file, this.code, 'Unknown Error', {x: this.x, y: 0}))
+
+      const char = this.nextExcept(WORDBREAK)
+      this.index--
+
+      if (NUMBER_CHARS.includes(char)) return parseNumber(this)
     }
   }
 
   tryMatch(keywords: string[]): string | undefined {
+    let oldIndex = this.index
+
     let word = this.nextExcept(WORDBREAK)
+
+    if (!word) {
+      this.index = oldIndex
+      return
+    }
+
     while (this.code.length > this.index + 1) {
       for (let i = 0; i < keywords.length; i++) {
         if (!keywords[i].startsWith(word)) keywords.splice(i, 1)
       }
-      if (keywords.length === 0) return
+      if (keywords.length === 0) {
+        this.index = oldIndex
+        return
+      }
 
       const char = this.next()
       if (WORDBREAK.includes(char)) {
         if (keywords.includes(word)) return word
-        this.index -= word.length
+        this.index = oldIndex
         return
       }
       word += char
     }
 
-    this.index -= word.length
+    this.index = oldIndex
     return
   }
 
@@ -110,6 +142,6 @@ export default class Tokenizer {
   }
 
   get y() {
-    return this.code.substring(0, this.index).split('\n').length
+    return this.code.substring(0, this.index).split('\n').length - 1
   }
 }

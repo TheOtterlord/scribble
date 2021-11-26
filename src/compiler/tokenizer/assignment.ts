@@ -41,7 +41,7 @@ export function parseAssignment(t: Tokenizer, option: keyof SyntaxOptions, match
     }
   }
 
-  if (!name || !value) throw Error(`Misssing ${name ? 'value' : 'name'} in assignment`)
+  if (!name || !value) throw Error(`Missing ${name ? 'value' : 'name'} in assignment`)
 
   return {
     x,

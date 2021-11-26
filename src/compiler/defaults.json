@@ -8,5 +8,5 @@
     "moduloAssignment": ["modulo", ":name", "by", ":value"],
     "exponentAssignment": ["raise", ":name", "to", ":value"]
   },
-  "trace": false
+  "trace": true
 }
