@@ -7,7 +7,7 @@ export interface NumberToken extends Token {
   value: string
 }
 
-export function parseNumber(t: Tokenizer) {
+export function parseNumber(t: Tokenizer): NumberToken {
   let word = t.nextExcept(WORDBREAK)
 
   let x = t.x

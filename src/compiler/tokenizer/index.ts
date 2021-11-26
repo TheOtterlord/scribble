@@ -1,9 +1,10 @@
 import Compiler from '..'
-import { NUMBER_CHARS, WORDBREAK } from './constants'
+import { NUMBER_CHARS, STRING_CHARS, WORDBREAK } from './constants'
 import type { SyntaxOptions, SyntaxOption } from '../types'
 import { parseAssignment } from './assignment'
 import { parseNumber } from './number'
 import ScribbleError from '../error'
+import { parseString } from './string'
 
 export interface Token {
   x: number
@@ -27,6 +28,8 @@ export default class Tokenizer {
   }
 
   tokenize() {
+    this.compiler.trace('Starting tokenization')
+
     for (let key in this.compiler.options.syntax) {
       let option: SyntaxOption = this.compiler.options.syntax[(key as keyof SyntaxOptions)]
       if (typeof option[0] === 'string') option = [(option as string[])]
@@ -79,6 +82,7 @@ export default class Tokenizer {
       const char = this.nextExcept(WORDBREAK)
       this.index--
 
+      if (STRING_CHARS.includes(char)) return parseString(this)
       if (NUMBER_CHARS.includes(char)) return parseNumber(this)
     }
   }
